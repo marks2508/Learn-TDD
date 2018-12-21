@@ -11,67 +11,11 @@
       <h2>Calculate the Change for a Given Price and Cash Received</h2>
       <!-- <input type='text' id='price'> </input> -->
     </div>
-
     <div id="qunit"></div>
     <div id="qunit-fixture"></div>
     <script src="https://code.jquery.com/qunit/qunit-1.18.0.js"></script>
-
-    <script>
-  // BELOW IS THE ALGORITHM THAT WORKS:
-
-  //     var coins = [200, 100, 50, 20, 10, 5, 2, 1]
-  // function getChange (payable, paid) {
-  //   var change = [];
-  //   var length = coins.length;
-  //   var remaining = paid - payable; // we reduce this below
-  //
-  //   for (var i = 0; i < length; i++) { // loop through array of notes & coins:
-  //     var coin = coins[i];
-  //
-  //     var times_coin_fits = Math.floor(remaining / coin); // no partial coins
-  //     if(times_coin_fits >= 1) { // check coin fits into the remaining amount
-  //
-  //       for(var j = 0; j < times_coin_fits ; j++) { // add coin to change x times
-  //         change.push(coin);
-  //         remaining = remaining - coin;  // subtract coin from remaining
-  //       }
-  //     }
-  //   }
-  //   return change;
-  // };
-
-  // BUT THIS IS A MUCH CLEANER SOLUTION, IMO
-    var cointypes = [200,100,50,20,10,5,2,1];
-    function getChange(price, paid) {
-      var difference = paid - price;
-      var change = [];
-      cointypes.forEach(function(coin) {
-        while (difference >= coin) {
-          change.push(coin);
-          difference = difference - coin;
-        }
-      });
-      return change;
-    }
-    
-    </script>
-
-    <script>
-    test('getChange(1,1) should equal [] - an empty array', function(assert) {
-      var result = getChange(1, 1); //no change/coins just an empty array
-      var expected = [];
-      assert.deepEqual(result, expected);
-    }); // use deepEqual for arrays see: https://api.qunitjs.com/deepEqual/
-    test('getChange(215,300) should return [50,20,10,5]', function(assert) {
-      var result = getChange(215, 300);
-      var expected = [50,20,10,5];
-      assert.deepEqual(result, expected);
-    });
-    test('getChange(486, 600) should equal [100, 10, 2, 2]', function(assert) {
-      var result = getChange(486, 600);
-      var expected = [100, 10, 2, 2];
-      assert.deepEqual(result, expected);
-    });
-    </script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/blanket.js/1.1.4/blanket.js"></script>
+    <script src="/change.js" data-cover></script> <!-- load our getChange method  -->
+    <script src="/test.js"></script>              <!-- load tests after getChange -->
   </body>
 </html>
